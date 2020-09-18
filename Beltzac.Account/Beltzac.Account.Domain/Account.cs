@@ -10,10 +10,10 @@ namespace Beltzac.Account.Domain
         public int Id { get; private set; }
         public decimal Balance { get; private set; }
 
-        public Account(int id, decimal balance)
+        public Account(int id)
         {
             Id = id;
-            Balance = balance;
+            Balance = 0;
         }
 
         public void Deposit(decimal amount)
