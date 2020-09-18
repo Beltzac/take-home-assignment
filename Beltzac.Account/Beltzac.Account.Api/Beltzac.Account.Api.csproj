@@ -6,10 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Beltzac.Account.Data\Beltzac.Account.Data.csproj" />
     <ProjectReference Include="..\Beltzac.Account.Domain\Beltzac.Account.Domain.csproj" />
   </ItemGroup>
 
