@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Beltzac.Account.Domain
 {
-    public class AccountHandler
+    public class AccountHandler : IAccountHandler
     {
         private readonly IRepository<Account> _accounts;
 
