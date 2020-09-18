@@ -1,5 +1,6 @@
 ﻿using Beltzac.Account.Domain;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,26 +9,27 @@ namespace Beltzac.Account.Data
 {
     public class AccountRepository : IRepository<Domain.Account>
     {
-        private List<Domain.Account> _accounts = new List<Domain.Account>();
+        private static ConcurrentDictionary<int, Domain.Account> _accounts = new ConcurrentDictionary<int, Domain.Account>();     
 
         public void Add(Domain.Account entity)
         {
-            _accounts.Add(entity);
+            _accounts.TryAdd(entity.Id, entity);
         }
 
         public void Delete(int id)
         {
-            _accounts.RemoveAll(item => item.Id == id);
+            _accounts.TryRemove(id, out var _);
         }
 
         public Domain.Account Get(int id)
         {
-            return _accounts.FirstOrDefault(item => item.Id == id);
+            _accounts.TryGetValue(id, out var account);
+            return account;
         }
 
         public IEnumerable<Domain.Account> GetAll()
         {
-            return _accounts;
+            return _accounts.Values;
         }
     }
 }
