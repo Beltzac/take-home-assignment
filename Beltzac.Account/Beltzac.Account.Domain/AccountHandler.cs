@@ -40,6 +40,11 @@ namespace Beltzac.Account.Domain
         public void Deposit(int idDestination, decimal amount)
         {
             var account = GetAccount(idDestination);
+
+            //Create an account if it doesn't exists
+            if (account == null)
+                account = CreateAccount(idDestination);
+
             account.Deposit(amount);
         }
 
