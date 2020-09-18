@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Beltzac.Account.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ResetController : ControllerBase
     {
