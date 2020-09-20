@@ -12,11 +12,11 @@ namespace Beltzac.Account.Api.Controllers
     [ApiController]
     public class BalanceController : ControllerBase
     {
-        private readonly IAccountHandler _accountHandler;
+        private readonly IRepository<Domain.Account> _accounts;
 
-        public BalanceController(IAccountHandler accountHandler)
+        public BalanceController(IRepository<Domain.Account> accountRepository)
         {
-            _accountHandler = accountHandler;
+            _accounts = accountRepository;
         }
 
         [HttpGet()]
@@ -25,7 +25,7 @@ namespace Beltzac.Account.Api.Controllers
             if (id == null)
                 return BadRequest();
 
-            var account = _accountHandler.GetAccount(id.Value);
+            var account = _accounts.Get(id.Value);
 
             if (account == null)
                 return NotFound(0);

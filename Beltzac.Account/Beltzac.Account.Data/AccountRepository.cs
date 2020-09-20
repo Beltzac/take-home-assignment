@@ -9,7 +9,7 @@ namespace Beltzac.Account.Data
 {
     public class AccountRepository : IRepository<Domain.Account>
     {
-        private static ConcurrentDictionary<int, Domain.Account> _accounts = new ConcurrentDictionary<int, Domain.Account>();     
+        private static ConcurrentDictionary<int, Domain.Account> _accounts = new ConcurrentDictionary<int, Domain.Account>();
 
         public void Add(Domain.Account entity)
         {
@@ -19,6 +19,11 @@ namespace Beltzac.Account.Data
         public void Delete(int id)
         {
             _accounts.TryRemove(id, out var _);
+        }
+
+        public void DeleteAll()
+        {
+            _accounts.Clear();
         }
 
         public Domain.Account Get(int id)

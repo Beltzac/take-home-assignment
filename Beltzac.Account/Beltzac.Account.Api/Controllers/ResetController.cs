@@ -12,17 +12,17 @@ namespace Beltzac.Account.Api.Controllers
     [ApiController]
     public class ResetController : ControllerBase
     {
-        private readonly IAccountHandler _accountHandler;
+        private readonly IRepository<Domain.Account> _accounts;
 
-        public ResetController(IAccountHandler accountHandler)
+        public ResetController(IRepository<Domain.Account> accountRepository)
         {
-            _accountHandler = accountHandler;
+            _accounts = accountRepository;
         }
 
         [HttpPost]
         public IActionResult Post()
         {
-            _accountHandler.Reset();
+            _accounts.DeleteAll();
             return Ok();
         }
     }

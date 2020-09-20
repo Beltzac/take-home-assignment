@@ -33,7 +33,6 @@ namespace Beltzac.Account.Api
                 });
 
             services.AddScoped<IRepository<Domain.Account>, AccountRepository>();
-            services.AddScoped<IAccountHandler, AccountHandler>();           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

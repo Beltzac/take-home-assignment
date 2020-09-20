@@ -13,60 +13,84 @@ namespace Beltzac.Account.Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly IAccountHandler _accountHandler;
+        private readonly IRepository<Domain.Account> _accounts;
 
-        public EventController(IAccountHandler accountHandler)
+        public EventController(IRepository<Domain.Account> accountRepository)
         {
-            _accountHandler = accountHandler;
+            _accounts = accountRepository;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] EventRequestModel eventModel)
         {
-            Domain.Account origin = null;
-            Domain.Account destination = null;
-
-            switch (eventModel.Type)
+            return eventModel.Type switch
             {
-                case EventRequestModel.EventType.Deposit:              
-                    destination = _accountHandler.GetAccount(eventModel.Destination.Value);
+                EventRequestModel.EventType.Deposit => Deposit(eventModel),
+                EventRequestModel.EventType.Withdraw => Withdraw(eventModel),
+                EventRequestModel.EventType.Transfer => Transfer(eventModel),
+                _ => BadRequest(),
+            };
+        }
 
-                    if (destination == null)
-                        destination = _accountHandler.CreateAccount(eventModel.Destination.Value);
+        private IActionResult Deposit(EventRequestModel eventModel)
+        {
+            Domain.Account destination = eventModel.Destination == null ? null : _accounts.Get(eventModel.Destination.Value);
 
-                    _accountHandler.Deposit(destination, eventModel.Amount);
-                    break;
+            if (destination == null)
+            {
+                destination = new Domain.Account(eventModel.Destination.Value);
+                _accounts.Add(destination);
+            }
 
-                case EventRequestModel.EventType.Withdraw:
-                    origin = _accountHandler.GetAccount(eventModel.Origin.Value);
+            destination.Deposit(eventModel.Amount);
 
-                    if (origin == null)
-                        return NotFound(0);
+            var response = new EventResponseModel
+            {
 
-                    _accountHandler.Withdraw(origin, eventModel.Amount);
-                    break;
+                Destination = new AccountModel { Id = destination.Id, Balance = destination.Balance }
+            };
 
-                case EventRequestModel.EventType.Transfer:
-                    origin = _accountHandler.GetAccount(eventModel.Origin.Value);
-                    destination = _accountHandler.GetAccount(eventModel.Destination.Value);
+            return Created(string.Empty, response);
+        }
 
-                    if (origin == null || destination == null)
-                        return NotFound(0);
+        private IActionResult Withdraw(EventRequestModel eventModel)
+        {
+            Domain.Account origin = eventModel.Origin == null ? null : _accounts.Get(eventModel.Origin.Value);
 
-                    _accountHandler.Transfer(origin, destination, eventModel.Amount);
-                    break;
+            if (origin == null)
+                return NotFound(0);
 
-                default:
-                    return BadRequest();                    
-            }            
+            origin.Withdraw(eventModel.Amount);
 
-            var response = new EventResponseModel();
+            var response = new EventResponseModel
+            {
+                Origin = new AccountModel { Id = origin.Id, Balance = origin.Balance }
+            };
 
-            if(origin != null)
-                response.Origin = new AccountModel { Id = origin.Id, Balance = origin.Balance };
+            return Created(string.Empty, response);
+        }
 
-            if(destination != null)
-                response.Destination = new AccountModel { Id = destination.Id, Balance = destination.Balance };
+        private IActionResult Transfer(EventRequestModel eventModel)
+        {
+            Domain.Account origin = eventModel.Origin == null ? null : _accounts.Get(eventModel.Origin.Value);
+            Domain.Account destination = eventModel.Destination == null ? null : _accounts.Get(eventModel.Destination.Value);
+
+            if (origin == null)
+                return NotFound(0);
+
+            if (destination == null)
+            {
+                destination = new Domain.Account(eventModel.Destination.Value);
+                _accounts.Add(destination);
+            }
+
+            origin.Transfer(destination, eventModel.Amount);
+
+            var response = new EventResponseModel
+            {
+                Origin = new AccountModel { Id = origin.Id, Balance = origin.Balance },
+                Destination = new AccountModel { Id = destination.Id, Balance = destination.Balance }
+            };
 
             return Created(string.Empty, response);
         }
