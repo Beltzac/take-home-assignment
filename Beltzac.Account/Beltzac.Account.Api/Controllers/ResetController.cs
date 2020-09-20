@@ -23,7 +23,7 @@ namespace Beltzac.Account.Api.Controllers
         public IActionResult Post()
         {
             _accounts.DeleteAll();
-            return Ok();
+            return Content("OK");      
         }
     }
 }
