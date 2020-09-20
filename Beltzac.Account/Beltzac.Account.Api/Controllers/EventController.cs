@@ -34,11 +34,14 @@ namespace Beltzac.Account.Api.Controllers
 
         private IActionResult Deposit(EventRequestModel eventModel)
         {
-            Domain.Account destination = eventModel.Destination == null ? null : _accounts.Get(eventModel.Destination.Value);
+            if (string.IsNullOrWhiteSpace(eventModel.Destination))
+                return BadRequest();
+
+            Domain.Account destination = eventModel.Destination == null ? null : _accounts.Get(eventModel.Destination);
 
             if (destination == null)
             {
-                destination = new Domain.Account(eventModel.Destination.Value);
+                destination = new Domain.Account(eventModel.Destination);
                 _accounts.Add(destination);
             }
 
@@ -55,7 +58,10 @@ namespace Beltzac.Account.Api.Controllers
 
         private IActionResult Withdraw(EventRequestModel eventModel)
         {
-            Domain.Account origin = eventModel.Origin == null ? null : _accounts.Get(eventModel.Origin.Value);
+            if (string.IsNullOrWhiteSpace(eventModel.Origin))
+                return BadRequest();
+
+            Domain.Account origin = eventModel.Origin == null ? null : _accounts.Get(eventModel.Origin);
 
             if (origin == null)
                 return NotFound(0);
@@ -72,15 +78,18 @@ namespace Beltzac.Account.Api.Controllers
 
         private IActionResult Transfer(EventRequestModel eventModel)
         {
-            Domain.Account origin = eventModel.Origin == null ? null : _accounts.Get(eventModel.Origin.Value);
-            Domain.Account destination = eventModel.Destination == null ? null : _accounts.Get(eventModel.Destination.Value);
+            if (string.IsNullOrWhiteSpace(eventModel.Origin) || string.IsNullOrWhiteSpace(eventModel.Destination))
+                return BadRequest();
+
+            Domain.Account origin = eventModel.Origin == null ? null : _accounts.Get(eventModel.Origin);
+            Domain.Account destination = eventModel.Destination == null ? null : _accounts.Get(eventModel.Destination);
 
             if (origin == null)
                 return NotFound(0);
 
             if (destination == null)
             {
-                destination = new Domain.Account(eventModel.Destination.Value);
+                destination = new Domain.Account(eventModel.Destination);
                 _accounts.Add(destination);
             }
 

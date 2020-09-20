@@ -8,11 +8,11 @@ namespace Beltzac.Account.Domain
 {
     public class Account
     {
-        public int Id { get; private set; }
+        public string Id { get; private set; }
         public decimal Balance => CalculateBalance();
         public List<Transaction> Transactions { get; private set; }
 
-        public Account(int id)
+        public Account(string id)
         {
             Id = id;
             Transactions = new List<Transaction>();

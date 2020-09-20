@@ -20,12 +20,12 @@ namespace Beltzac.Account.Api.Controllers
         }
 
         [HttpGet()]
-        public IActionResult Get([FromQuery(Name = "account_id")] int? id)
+        public IActionResult Get([FromQuery(Name = "account_id")] string id)
         {
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(id))
                 return BadRequest();
 
-            var account = _accounts.Get(id.Value);
+            var account = _accounts.Get(id);
 
             if (account == null)
                 return NotFound(0);

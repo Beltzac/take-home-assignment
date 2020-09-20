@@ -9,8 +9,8 @@ namespace Beltzac.Account.Api.Models
     {
         public EventType Type { get; set; }
         public decimal Amount { get; set; }
-        public int? Origin { get; set; }
-        public int? Destination { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
 
         public enum EventType
         {
