@@ -29,31 +29,31 @@ namespace Beltzac.Account.Api.Controllers
             switch (eventModel.Type)
             {
                 case EventRequestModel.EventType.Deposit:              
-                    destination = _accountHandler.GetAccount(eventModel.Destination);
+                    destination = _accountHandler.GetAccount(eventModel.Destination.Value);
 
                     if (destination == null)
-                        return NotFound(0);
+                        destination = _accountHandler.CreateAccount(eventModel.Destination.Value);
 
-                    _accountHandler.Deposit(eventModel.Destination, eventModel.Amount);
+                    _accountHandler.Deposit(destination, eventModel.Amount);
                     break;
 
                 case EventRequestModel.EventType.Withdraw:
-                    origin = _accountHandler.GetAccount(eventModel.Origin);
+                    origin = _accountHandler.GetAccount(eventModel.Origin.Value);
 
                     if (origin == null)
                         return NotFound(0);
 
-                    _accountHandler.Withdraw(eventModel.Origin, eventModel.Amount);
+                    _accountHandler.Withdraw(origin, eventModel.Amount);
                     break;
 
                 case EventRequestModel.EventType.Transfer:
-                    origin = _accountHandler.GetAccount(eventModel.Origin);
-                    destination = _accountHandler.GetAccount(eventModel.Destination);
+                    origin = _accountHandler.GetAccount(eventModel.Origin.Value);
+                    destination = _accountHandler.GetAccount(eventModel.Destination.Value);
 
                     if (origin == null || destination == null)
                         return NotFound(0);
 
-                    _accountHandler.Transfer(eventModel.Origin, eventModel.Destination, eventModel.Amount);
+                    _accountHandler.Transfer(origin, destination, eventModel.Amount);
                     break;
 
                 default:
