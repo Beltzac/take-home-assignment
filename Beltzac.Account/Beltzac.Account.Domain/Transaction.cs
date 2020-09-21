@@ -4,22 +4,34 @@ using System.Text;
 
 namespace Beltzac.Account.Domain
 {
-    public class Transaction
+    public abstract class Transaction
     {
-        public TransactionType Type { get; set; }
         public decimal Amount { get; set; }
 
-        public Transaction(TransactionType type, decimal amount)
+        public Transaction(decimal amount)
         {
-            Type = type;
             Amount = amount;
         }
+    }
 
-        public enum TransactionType
+    public class DepositTransaction : Transaction
+    {
+        public DepositTransaction(decimal amount) : base(amount)
         {
-            Deposit,
-            Withdraw,
-            Transfer
+        }
+    }
+
+    public class WithdrawTransaction : Transaction
+    {
+        public WithdrawTransaction(decimal amount) : base(amount)
+        {
+        }
+    }
+
+    public class TransferTransaction : Transaction
+    {
+        public TransferTransaction(decimal amount) : base(amount)
+        {
         }
     }
 }
