@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beltzac.Account.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beltzac.Account.Kernel", "Beltzac.Account.Kernel\Beltzac.Account.Kernel.csproj", "{6E2FC449-5A9A-44CC-9A3B-8B447E373C6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beltzac.Account.UnitTest", "Beltzac.Account.UnitTest\Beltzac.Account.UnitTest.csproj", "{ED2D97AE-A1C9-41B6-85A3-ECF49672DA4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6E2FC449-5A9A-44CC-9A3B-8B447E373C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E2FC449-5A9A-44CC-9A3B-8B447E373C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E2FC449-5A9A-44CC-9A3B-8B447E373C6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED2D97AE-A1C9-41B6-85A3-ECF49672DA4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED2D97AE-A1C9-41B6-85A3-ECF49672DA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED2D97AE-A1C9-41B6-85A3-ECF49672DA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED2D97AE-A1C9-41B6-85A3-ECF49672DA4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

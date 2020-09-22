@@ -5,8 +5,13 @@ namespace Beltzac.Account.Kernel
 {
     public class Result
     {
-        public List<Error> Errors { get; set; } = new List<Error>();
-        public bool IsOK => Errors.Count > 0;
+        public List<Error> Errors { get; set; }
+        public bool IsOK => Errors.Count == 0;
+
+        public Result()
+        {
+            Errors = new List<Error>();
+        }
 
         public void Merge(Result result)
         {
