@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Beltzac.Account.Domain
+namespace Beltzac.Account.Domain.Interfaces
 {
     public interface IRepository<T>
     {

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Beltzac.Account.Data\Beltzac.Account.Data.csproj" />
     <ProjectReference Include="..\Beltzac.Account.Domain\Beltzac.Account.Domain.csproj" />
+    <ProjectReference Include="..\Beltzac.Account.Infrastructure\Beltzac.Account.Infrastructure.csproj" />
   </ItemGroup>
 
 

@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 
-namespace Beltzac.Account.Domain
+namespace Beltzac.Account.Domain.Models
 {
     public class Account
     {

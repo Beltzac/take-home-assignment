@@ -1,17 +1,18 @@
 ﻿using Beltzac.Account.Domain;
+using Beltzac.Account.Domain.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Beltzac.Account.Data
+namespace Beltzac.Account.Infrastructure.Repositories
 {
-    public class AccountRepository : IRepository<Domain.Account>
+    public class AccountRepository : IRepository<Domain.Models.Account>
     {
-        private static ConcurrentDictionary<string, Domain.Account> _accounts = new ConcurrentDictionary<string, Domain.Account>();
+        private static ConcurrentDictionary<string, Domain.Models.Account> _accounts = new ConcurrentDictionary<string, Domain.Models.Account>();
 
-        public void Add(Domain.Account entity)
+        public void Add(Domain.Models.Account entity)
         {
             _accounts.TryAdd(entity.Id, entity);
         }
@@ -26,13 +27,13 @@ namespace Beltzac.Account.Data
             _accounts.Clear();
         }
 
-        public Domain.Account Get(string id)
+        public Domain.Models.Account Get(string id)
         {
             _accounts.TryGetValue(id, out var account);
             return account;
         }
 
-        public IEnumerable<Domain.Account> GetAll()
+        public IEnumerable<Domain.Models.Account> GetAll()
         {
             return _accounts.Values;
         }

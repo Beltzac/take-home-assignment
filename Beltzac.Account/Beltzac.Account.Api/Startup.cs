@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Beltzac.Account.Data;
-using Beltzac.Account.Domain;
+using Beltzac.Account.Api.Services;
+using Beltzac.Account.Domain.Interfaces;
+using Beltzac.Account.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,8 @@ namespace Beltzac.Account.Api
                     options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                 });
 
-            services.AddScoped<IRepository<Domain.Account>, AccountRepository>();
+            services.AddScoped<IRepository<Domain.Models.Account>, AccountRepository>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
